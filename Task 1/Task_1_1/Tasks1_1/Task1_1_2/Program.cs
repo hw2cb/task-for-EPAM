@@ -13,20 +13,17 @@
  * * * * * * * *
  */
 
+using SD;
+
 namespace Tasks1_1
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Введите количество строк: ");
-            int result;
-            while(!int.TryParse(Console.ReadLine(), out result) || result <=0)
-            {
-                Console.WriteLine("Введите корректное число строк: ");
-            }
+            int numberN = SD.SD.EnterNumber();
 
-            for (int i = 0; i < result; i++)
+            for (int i = 0; i < numberN; i++)
             {
                 for(int j = 0; j <= i; j++)
                 {
