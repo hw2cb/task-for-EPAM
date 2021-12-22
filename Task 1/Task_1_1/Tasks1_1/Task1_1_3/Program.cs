@@ -37,7 +37,8 @@ namespace Tasks1_1
                     Console.Write('*');
                 }
                 Console.WriteLine();
-                countStar+=2;
+                //данная итерация увеличивает количество звезд на 2 с новой строкой
+                countStar+=2; 
                 countSpace--;
 
             }
