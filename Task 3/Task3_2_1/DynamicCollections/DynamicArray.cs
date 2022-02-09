@@ -39,7 +39,7 @@ namespace DynamicCollections
             }
         }
         
-        public int Length { get; private set; }
+        public int Length { get; protected set; }
         private int _capacity;
         public int Capacity 
         { 
@@ -152,7 +152,7 @@ namespace DynamicCollections
             return GetEnumerator();
         }
 
-        public object Clone()
+        public virtual object Clone()
         {
             return new DynamicArray<T>(this);
         }

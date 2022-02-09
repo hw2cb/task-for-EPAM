@@ -164,7 +164,10 @@ namespace Task3_2_1
             SlowPrintArray(d);
             #endregion
 
-
+            Console.WriteLine("\nМетод Clone");
+            CycledDynamicArray<int> test2 = new CycledDynamicArray<int> { 1, 2, 3 };
+            CycledDynamicArray<int> testcopy = (CycledDynamicArray<int>)test2.Clone();
+            SlowPrintArray(testcopy);
         }
         private static void PrintArray<T>(IEnumerable<T> array)
         {

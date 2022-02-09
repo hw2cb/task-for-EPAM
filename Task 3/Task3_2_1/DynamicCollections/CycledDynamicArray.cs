@@ -8,6 +8,12 @@ namespace DynamicCollections
 {
     public sealed class CycledDynamicArray<T> : DynamicArray<T>
     {
+        private CycledDynamicArray(T[] array, int lenght, int capacity)
+        {
+            _storageArray = array;
+            Length = lenght;
+            Capacity = capacity;
+        }
         public CycledDynamicArray() : this(8) { }
         public CycledDynamicArray(int capacity):base(capacity)
         {
@@ -20,6 +26,10 @@ namespace DynamicCollections
         public override IEnumerator<T> GetEnumerator()
         {
             return new CycledDynamicArrayEnumerator<T>(_storageArray, Length);
+        }
+        public override object Clone()
+        {
+            return new CycledDynamicArray<T>(_storageArray, Length, Capacity);
         }
     }
     internal sealed class CycledDynamicArrayEnumerator<T> : DynamicArrayEnumerator<T>
