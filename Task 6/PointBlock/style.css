@@ -1,0 +1,47 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.triangle{
+    position: relative;
+    content: "";
+
+    width: 0;
+    height: 0;
+    border-left: 60px solid transparent;
+    border-right: 60px solid transparent;
+    border-bottom: 60px solid rgb(138, 179, 255);
+    
+    margin: auto;
+    margin-top: 10px;
+}
+.triangle::before
+{
+    z-index: -1;
+
+    content: "";
+    position: relative;
+    left: -59px;
+    top: -25px;
+    width: 0;
+    height: 0;
+
+    border-right: 60px solid transparent;
+    border-left: 60px solid transparent;
+    border-bottom: 60px solid rgb(132, 216, 255);
+}
+.rectangle{
+    z-index: -2;
+
+    height: 80px;
+    margin-top: -10px;
+    position: relative;
+    text-align: center;
+
+    background: rgb(138, 179, 255);
+    border: rgb(132, 216, 255) 5px solid;
+}
+p{
+    margin-top: 25px;
+    color: white;
+}
