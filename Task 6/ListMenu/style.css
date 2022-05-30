@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.menu-list{
+    width: 200px;
+    height: auto;
+    background-color: #ffd858;
+    border: 1px solid black;
+    border-radius: 9px;
+    color:#a52a2a;
+    /*line-height: 30px;  тогда у нас сверху и снизу не будет желаемого отступа*/ 
+    box-shadow: 5px 5px 0px 0px #851c1c;
+}
+li{
+    list-style: none;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+li:last-child{
+    padding-bottom: 10px;
+}
+
+/* position */
+.container{
+    position: relative;
+}
+.menu{
+    position: absolute;
+    left: 40%;
+}
