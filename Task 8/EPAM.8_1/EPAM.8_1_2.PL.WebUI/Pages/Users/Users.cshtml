@@ -1,0 +1,45 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Пользователи";
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+}
+
+@foreach(var item in usersBLL.GetUsers())
+{ 
+    <div>
+        <ul style="border:5px solid  black">
+            <li>
+                Имя: @item.Name
+            </li>
+            <li>
+                Возраст: @item.Age
+            </li>
+            <li>
+                Дата рождения: @item.DateOfBirthday
+            </li>
+            <li>
+                <form method="get" action="~/Helpers/Users/User.cshtml">
+                    <input type="hidden" name="idUser" value="@item.Id" />
+                    <button type="submit">Просмотреть пользователя</button>
+                </form>
+            </li>
+            <li>
+                <form method="post" action="~/Pages/Users/EditUser.cshtml">
+                    <input type="hidden" name="idUser" value="@item.Id" />
+                    <button type="submit">Редактировать пользователя</button>
+                </form>
+            </li>
+            <li>
+                <form method="post" action="~/Pages/Users/AddAwardUser.cshtml">
+                    <input type="hidden" name="idUser" value="@item.Id" />
+                    <button type="submit">Наградить пользователя</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+}
+<form method="get" action="~/Pages/Users/CreateUser.cshtml">
+    <button type="submit">Создать нового пользователя</button>
+</form>

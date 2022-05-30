@@ -1,0 +1,11 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@{
+    var idUser = Request["idUser"];
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+    Guid.TryParse(idUser, out Guid result);
+    usersBLL.RemoveUser(result);
+    Response.Redirect("~/Pages/Users/Users.cshtml");
+}
+

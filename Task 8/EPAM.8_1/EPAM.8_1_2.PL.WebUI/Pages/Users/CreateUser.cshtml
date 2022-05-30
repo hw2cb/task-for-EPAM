@@ -1,0 +1,29 @@
+﻿@using EPAM._8_1_2.PL.WebUI.Helpers;
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = $"Создание нового пользователя";
+}
+<form method="post" action="~/Helpers/Common/Create.cshtml" enctype="multipart/form-data" >
+    <div>
+        Ваше имя:
+        <input type="text" name="name" />
+    </div>
+
+    <div>
+        Дата рождения:
+        <input type="date" name="dateOfBirthday" />
+    </div>
+    <div>
+        <fieldset>
+            <legend> Загрузка фото личного профиля: </legend>
+            <label for="Image">Фото:</label>
+            <input type="file" name="Image" />
+            <br />
+        </fieldset>
+    </div>
+    <div>
+        <input type="hidden" name="whoSend" value="@UserOrAward.User" />
+        <input type="submit" value="Создать" />
+    </div>
+</form>
+

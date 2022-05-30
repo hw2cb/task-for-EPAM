@@ -1,0 +1,36 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@using EPAM._8_1_2.PL.WebUI.Helpers
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    var idUser = Request["idUser"];
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+    Guid.TryParse(idUser, out Guid result);
+    User user = usersBLL.GetUser(result);
+    PageData["Title"] = $"Редактирование {user.Name}";
+}
+<form method="post" action="~/Helpers/Common/Edit.cshtml" enctype="multipart/form-data">
+    <div>
+        Ваше имя:
+        <input type="text" name="name" />
+    </div>
+
+    <div>
+        Дата рождения:
+        <input type="date" name="dateOfBirthday" />
+    </div>
+    <fieldset>
+        <legend> Загрузка фото личного профиля: </legend>
+        <label for="Image">Фото:</label>
+        <input type="file" name="Image" />
+        <br />
+    </fieldset>
+    <div>
+        <input type="hidden" name="idUser" value="@idUser" />
+        <input type="hidden" name="whoSend" value="@UserOrAward.User" />
+        <input type="submit" value="Изменить" />
+    </div>
+</form>
+
+

@@ -1,0 +1,63 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+
+    var idUser = Request["idUser"];
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+    Guid.TryParse(idUser, out Guid result);
+    User user = usersBLL.GetUser(result);
+    PageData["Title"] = $"Пользователь {user.Name}";
+}
+<div>
+    <ul style="border:5px solid  black">
+        <li>
+            @if(String.IsNullOrEmpty(user.PathToImage))
+            {
+                <img width="60", height="70" src="~/Content/noimage.png" />
+            }
+            else
+            {
+                string path = $@"/Images/UsersImages/{user.PathToImage}";
+                <img width="60", height="70" src="@path" />
+            }
+            
+        </li>
+        <li>
+            Имя: @user.Name
+        </li>
+        <li>
+            Возраст: @user.Age
+        </li>
+        <li>
+            Дата рождения: @user.DateOfBirthday
+        </li>
+    </ul>
+    <h4>Награды:</h4>
+    @foreach (var award in user.Awards)
+    {
+        <ul>
+            <li>
+                @if (String.IsNullOrEmpty(award.PathToImage))
+                {
+                    <img width="50" , height="60" src="~/Content/noimage.png" />
+                }
+                else
+                {
+                    string path = $@"/Images/AwardsImages/{award.PathToImage}";
+                    <img width="50" , height="60" src="@path" />
+                }
+                Название награды: @award.Title
+            </li>
+
+        </ul>
+    }
+    <form method="post" action="~/Helpers/Users/DeleteUser.cshtml">
+        <input type="hidden" name="idUser" value="@user.Id" />
+        <button type="submit">Удалить</button>
+    </form>
+    <a href="~/Pages/Users/Users.cshtml">К пользователям</a>
+
+</div>
+
