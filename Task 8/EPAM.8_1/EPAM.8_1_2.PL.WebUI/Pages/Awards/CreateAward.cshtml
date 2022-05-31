@@ -1,24 +1,28 @@
 ﻿@using EPAM._8_1_2.PL.WebUI.Helpers;
 @{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
     Layout = "~/Layouts/_BasicLayout.cshtml";
     PageData["Title"] = $"Создание новой награды";
 }
 
-<form method="post" action="~/Helpers/Common/Create.cshtml" enctype="multipart/form-data">
-    <div>
-        Название награды:
-        <input type="text" name="name" />
-    </div>
-    <div>
-        <fieldset>
-            <legend> Загрузка фото личного профиля: </legend>
-            <label for="Image">Фото:</label>
-            <input type="file" name="Image" />
-            <br />
-        </fieldset>
-    </div>
-    <div>
-        <input type="hidden" name="whoSend" value="@UserOrAward.Award" />
-        <input type="submit" value="Создать" />
-    </div>
-</form>
+    <form method="post" action="~/Helpers/Common/Create.cshtml" enctype="multipart/form-data">
+        <div>
+            Название награды:
+            <input type="text" name="name" />
+        </div>
+        <div>
+            <fieldset>
+                <legend> Загрузка фото личного профиля: </legend>
+                <label for="Image">Фото:</label>
+                <input type="file" name="Image" />
+                <br />
+            </fieldset>
+        </div>
+        <div>
+            <input type="hidden" name="whoSend" value="@UserOrAward.Award" />
+            <input type="submit" value="Создать" />
+        </div>
+    </form>

@@ -11,6 +11,10 @@
             <a href="~/Pages/Home.cshtml">Домашняя страница</a>
             <a href="~/Pages/Users/Users.cshtml">Пользователи</a>
             <a href="~/Pages/Awards/Awards.cshtml">Награды</a>
+            @if(User.Identity.IsAuthenticated)
+            {
+                <a href="~/Helpers/Common/LogOut.cshtml">Выйти</a>
+            }
         </div>
     </header>
     <div>

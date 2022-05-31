@@ -3,7 +3,7 @@
 @using Entities;
 @using EPAM._8_1_2.PL.WebUI.Helpers;
 @{
-    if(IsPost)
+    if (IsPost)
     {
         var whoSend = Request["whoSend"];
         Enum.TryParse(whoSend, out UserOrAward resultWhoSend);
@@ -14,6 +14,7 @@
         if (resultWhoSend == UserOrAward.User)
         {
             IUsersBLL usersBLL = DependencyResolver.Instance.UsersBLL;
+            IAuthBLL authBLL = DependencyResolver.Instance.AuthBLL;
             if (photo !=null)
             {
                 newFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
@@ -23,10 +24,13 @@
             }
             var name = Request["name"];
             var dateOfBirthdayRequest = Request["dateOfBirthday"];
+            var login = Request["login"];
+            var password = Request["pass"];
 
             DateTime.TryParse(dateOfBirthdayRequest, out DateTime dateOfBirthday);
 
-            usersBLL.AddUser(name, dateOfBirthday, newFileName);
+            User user = authBLL.Register(name, dateOfBirthday, newFileName, login, password);
+            authBLL.SetRole(user.Login, Request["role"]);
             Response.Redirect("~/Pages/Users/Users.cshtml");
         }
         else if (resultWhoSend == UserOrAward.Award)

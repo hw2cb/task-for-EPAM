@@ -19,9 +19,9 @@ namespace BLL
             _jsonDal = jsonDal;
         }
 
-        public User AddUser(string userName, DateTime dateOfBirthday, string namePhoto)
+        public User AddUser(string userName, DateTime dateOfBirthday, string namePhoto, string login, string password)
         {
-            User user = _jsonDal.AddUser(userName, dateOfBirthday);
+            User user = _jsonDal.AddUser(userName, dateOfBirthday, login, password);
             SetPhoto(user.Id, namePhoto);
             return user;
         }

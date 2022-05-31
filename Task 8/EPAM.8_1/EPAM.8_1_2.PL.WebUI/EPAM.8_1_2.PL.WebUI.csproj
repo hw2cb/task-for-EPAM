@@ -89,11 +89,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Content\noimage.png" />
-    <Content Include="README.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers\UserOrAward.cs" />
+    <Compile Include="Model\UserRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -107,12 +107,15 @@
     <Content Include="Helpers\Common\Create.cshtml" />
     <Content Include="Helpers\Users\SetAward.cshtml" />
     <Content Include="Helpers\Awards\DeleteAward.cshtml" />
+    <Content Include="Helpers\Common\LogOut.cshtml" />
     <None Include="packages.config" />
     <Content Include="Pages\Users\Users.cshtml" />
     <Content Include="Pages\Users\CreateUser.cshtml" />
     <Content Include="Pages\Awards\CreateAward.cshtml" />
     <Content Include="Pages\Awards\EditAward.cshtml" />
     <Content Include="Pages\Users\AddAwardUser.cshtml" />
+    <Content Include="Pages\Login.cshtml" />
+    <Content Include="Pages\AccessDenied.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

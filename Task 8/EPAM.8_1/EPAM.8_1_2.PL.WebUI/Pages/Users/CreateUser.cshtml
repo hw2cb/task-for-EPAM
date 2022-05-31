@@ -1,9 +1,33 @@
 ﻿@using EPAM._8_1_2.PL.WebUI.Helpers;
 @{
+
     Layout = "~/Layouts/_BasicLayout.cshtml";
     PageData["Title"] = $"Создание нового пользователя";
 }
-<form method="post" action="~/Helpers/Common/Create.cshtml" enctype="multipart/form-data" >
+
+
+<form method="post" action="~/Helpers/Common/Create.cshtml" enctype="multipart/form-data">
+    <div>
+        <label>Login</label>
+        <input name="login" type="text" placeholder="Enter login">
+    </div>
+    <p />
+    <div>
+        <label>Password</label>
+        <input name="pass" type="password" placeholder="Password">
+    </div>
+    <p /><p />
+    <div>
+        Выберите группу пользователей (для теста):
+        <select name="role">
+            <option value="admin">
+                Администратор
+            </option>
+            <option value="users">
+                Обычный пользователь
+            </option>
+        </select>
+    </div>
     <div>
         Ваше имя:
         <input type="text" name="name" />
@@ -26,4 +50,6 @@
         <input type="submit" value="Создать" />
     </div>
 </form>
+
+    
 

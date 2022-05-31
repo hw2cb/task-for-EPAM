@@ -2,6 +2,10 @@
 @using Dependencies;
 @using Entities;
 @{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
     var idAwardRequest = Request["idAward"];
     IAwardsBLL awardsBLL = Dependencies.DependencyResolver.Instance.AwardsBLL;
     Guid.TryParse(idAwardRequest, out Guid resultId);

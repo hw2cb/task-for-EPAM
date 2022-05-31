@@ -1,11 +1,13 @@
 ﻿using DAL.Interfaces;
 using Entities;
 using JsonDAL.Abstract;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,9 +21,9 @@ namespace JsonDAL
         {
             _awardsDAL = awardsDAL;
         }
-        public User AddUser(string name, DateTime dateOfBirthday)
+        public User AddUser(string name, DateTime dateOfBirthday, string login, string password)
         {
-            var user = new User(name, dateOfBirthday);
+            var user = new User(name, dateOfBirthday, login, password);
 
             string json = JsonConvert.SerializeObject(user);
             File.WriteAllText(GetFileFullNameById(user.Id), json);

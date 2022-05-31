@@ -2,6 +2,10 @@
 @using Dependencies;
 @using Entities;
 @{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
     var idUserRequest = Request["idUser"];
     var idAwardsRequest = Request["awardId"];
 

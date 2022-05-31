@@ -36,6 +36,18 @@ namespace Dependencies
                 return _userDao;
             }
         }
+
+        private IUsersDAL _userDaoSql;
+        public IUsersDAL UsersDaoSql
+        {
+            get
+            {
+                if (_userDaoSql == null)
+                    _userDaoSql = new SqlUsersDAO();
+                return _userDaoSql;
+            }
+        }
+
         private IAwardsDAL _awardsDao;
         public IAwardsDAL AwardsDao
         {
@@ -46,6 +58,8 @@ namespace Dependencies
                 return _awardsDao;
             }
         }
+
+
         private IUsersBLL _usersBLL;
         public IUsersBLL UsersBLL
         {
@@ -53,6 +67,7 @@ namespace Dependencies
             {
                 if (_usersBLL == null)
                     _usersBLL = new UsersManager(UsersDao);
+                    //_usersBLL = new UsersManager(UsersDaoSql);
                 return _usersBLL;
             }
         }
@@ -66,6 +81,17 @@ namespace Dependencies
                 return _awardsBLL;
             }
         }
+        private IAuthBLL _authBLL;
+        public IAuthBLL AuthBLL
+        {
+            get
+            {
+                if (_authBLL == null)
+                    _authBLL = new Auth(UsersBLL, UsersDao);
+                return _authBLL;
+            }
+        }
+
 
     }
 }

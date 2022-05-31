@@ -8,7 +8,7 @@ namespace DAL.Interfaces
 {
     public interface IUsersDAL
     {
-        User AddUser(string name, DateTime dateOfBirthday);
+        User AddUser(string name, DateTime dateOfBirthday, string login, string password);
         void RemoveUser(Guid Id);
         void EditUser(Guid id, string name, DateTime dateOfBirthday);
         void EditUser(Guid id, Award award);

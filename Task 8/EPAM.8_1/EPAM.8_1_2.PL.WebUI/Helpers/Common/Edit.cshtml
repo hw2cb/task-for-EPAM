@@ -3,7 +3,11 @@
 @using Entities;
 @using EPAM._8_1_2.PL.WebUI.Helpers;
 @{
-    if(IsPost)
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
+    if (IsPost)
     {
         var whoSend = Request["whoSend"];
         Enum.TryParse(whoSend, out UserOrAward resultWhoSend);

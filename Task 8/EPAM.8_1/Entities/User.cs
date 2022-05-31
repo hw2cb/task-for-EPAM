@@ -25,15 +25,26 @@ namespace Entities
         public List<Award> Awards { get; private set; } = new List<Award>();
 
         public string PathToImage { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public List<string> Roles { get; set; } = new List<string>();
 
-        public User(string name, DateTime dateOfBirthday)
+        public User(string name, DateTime dateOfBirthday, string login, string password) : this(Guid.NewGuid(), name, dateOfBirthday, login, password)
         {
-            Id = Guid.NewGuid();
+
+        }
+        public User(Guid id, string name, DateTime dateOfBirthday, string login, string password)
+        {
+            Id = id;
             Name = name;
             DateOfBirthday = dateOfBirthday;
-
+            Login = login;
+            Password = password;
             AwardsId = new List<Guid>();
             SetAge();
+        }
+        public User()
+        {
 
         }
         public void Edit(string name, DateTime dateOfBirthday)
@@ -43,13 +54,18 @@ namespace Entities
             SetAge();
 
         }
-        private void SetAge()
+        public void SetAge()
+        {
+            Age = GetNewAge(DateOfBirthday);
+        }
+        public static int GetNewAge(DateTime dateOfBirhday)
         {
             DateTime now = DateTime.Today;
-            int age = now.Year - DateOfBirthday.Year;
-            if (DateOfBirthday > now.AddYears(-age))
+            int age = now.Year - dateOfBirhday.Year;
+            if (dateOfBirhday > now.AddYears(-age))
                 age--;
-            Age = age;
+
+            return age;
         }
 
 
