@@ -1,0 +1,23 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
+    var idUserRequest = Request["idUser"];
+    var idAwardsRequest = Request["awardId"];
+
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+    IAwardsBLL awardsBLL = Dependencies.DependencyResolver.Instance.AwardsBLL;
+
+    Guid.TryParse(idUserRequest, out Guid idUser);
+    Guid.TryParse(idAwardsRequest, out Guid idAward);
+
+    User user = usersBLL.GetUser(idUser);
+
+    usersBLL.EditUser(idUser, awardsBLL.GetAward(idAward));
+    Response.Redirect("~/Pages/Users/Users.cshtml");
+}
+

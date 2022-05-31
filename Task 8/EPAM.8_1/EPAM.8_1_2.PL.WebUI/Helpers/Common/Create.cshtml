@@ -1,0 +1,54 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@using EPAM._8_1_2.PL.WebUI.Helpers;
+@{
+    if (IsPost)
+    {
+        var whoSend = Request["whoSend"];
+        Enum.TryParse(whoSend, out UserOrAward resultWhoSend);
+        WebImage photo = null;
+        var newFileName = "";
+        var imagePath = "";
+        photo = WebImage.GetImageFromRequest();
+        if (resultWhoSend == UserOrAward.User)
+        {
+            IUsersBLL usersBLL = DependencyResolver.Instance.UsersBLL;
+            IAuthBLL authBLL = DependencyResolver.Instance.AuthBLL;
+            if (photo !=null)
+            {
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                imagePath = $@"~\Images\UsersImages\"+newFileName;
+                photo.Resize(width: 60, height: 70, preserveAspectRatio: true, preventEnlarge: true);
+                photo.Save(imagePath);
+            }
+            var name = Request["name"];
+            var dateOfBirthdayRequest = Request["dateOfBirthday"];
+            var login = Request["login"];
+            var password = Request["pass"];
+
+            DateTime.TryParse(dateOfBirthdayRequest, out DateTime dateOfBirthday);
+
+            User user = authBLL.Register(name, dateOfBirthday, newFileName, login, password);
+            authBLL.SetRole(user.Login, Request["role"]);
+            Response.Redirect("~/Pages/Users/Users.cshtml");
+        }
+        else if (resultWhoSend == UserOrAward.Award)
+        {
+            IAwardsBLL awardsBLL = DependencyResolver.Instance.AwardsBLL;
+            if (photo !=null)
+            {
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                imagePath = $@"~\Images\AwardsImages\" + newFileName;
+                photo.Resize(width: 60, height: 70, preserveAspectRatio: true, preventEnlarge: true);
+                photo.Save(imagePath);
+            }
+            var title = Request["name"];
+            awardsBLL.AddAward(title, newFileName);
+            Response.Redirect("~/Pages/Awards/Awards.cshtml");
+        }
+    }
+
+}
+
+

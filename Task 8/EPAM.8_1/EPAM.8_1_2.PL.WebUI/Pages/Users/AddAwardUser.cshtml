@@ -1,0 +1,45 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = $"Награждение пользователя";
+
+    var idUser = Request["idUser"];
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+    IAwardsBLL awardsBLL = Dependencies.DependencyResolver.Instance.AwardsBLL;
+    Guid.TryParse(idUser, out Guid result);
+    User user = usersBLL.GetUser(result);
+}
+    <div>
+        <ul style="border:5px solid  black">
+            <li>
+                Имя: @user.Name
+            </li>
+            <li>
+                Возраст: @user.Age
+            </li>
+            <li>
+                Дата рождения: @user.DateOfBirthday
+            </li>
+        </ul>
+        <div>Выберите награду из списка</div>
+        <form method="post" action="~/Helpers/Users/SetAward.cshtml">
+            <select name="awardId">
+                @foreach (var item in awardsBLL.GetAwards())
+                {
+                    <option value="@item.Id">@item.Title</option>
+                }
+            </select>
+            <input type="hidden" name="idUser" value="@user.Id" />
+            <button type="submit">Наградить</button>
+        </form>
+        <a href="~/Pages/Users/Users.cshtml">К пользователям</a>
+
+    </div>
+
+

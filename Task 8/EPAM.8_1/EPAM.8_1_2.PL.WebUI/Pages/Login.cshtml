@@ -1,0 +1,35 @@
+﻿@using BLL.Interfaces;
+
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Вход";
+
+    if (IsPost)
+    {
+        IAuthBLL authBLL = Dependencies.DependencyResolver.Instance.AuthBLL;
+        var login = Request["login"];
+        var password = Request["pass"];
+
+        if (authBLL.CanLogin(login, password))
+        {
+            FormsAuthentication.SetAuthCookie(login, createPersistentCookie: true);
+
+            Response.Redirect("~/Pages/Home.cshtml");
+        }
+    }
+}
+
+<form method="post">
+    <div>
+        <label>Login</label>
+        <input name="login" type="text"  placeholder="Enter login">
+    </div>
+    <p />
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input name="pass" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+    </div>
+    <p /><p />
+    <button type="submit" class="btn btn-primary">Вход</button>
+</form>
+<a href="~/Pages/Users/CreateUser.cshtml">Регистрация</a>

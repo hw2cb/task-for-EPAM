@@ -1,0 +1,45 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@{
+    Layout = "~/Layouts/_BasicLayout.cshtml";
+    PageData["Title"] = "Награды";
+
+    IAwardsBLL awardsBLL = Dependencies.DependencyResolver.Instance.AwardsBLL;
+}
+@foreach (var item in awardsBLL.GetAwards())
+{
+    <div>
+        <ul style="border:5px solid  black">
+            <li>
+                @if (String.IsNullOrEmpty(item.PathToImage))
+                {
+                    <img width="50" , height="60" src="~/Content/noimage.png" />
+                }
+                else
+                {
+                    string path = $@"/Images/AwardsImages/{item.PathToImage}";
+                    <img width="50" , height="60" src="@path" />
+                }
+            </li>
+            <li>
+                Название: @item.Title
+            </li>
+            <li>
+                <form method="get" action="~/Helpers/Awards/DeleteAward.cshtml">
+                    <input type="hidden" name="idAward" value="@item.Id" />
+                    <button type="submit">Удалить награду</button>
+                </form>
+            </li>
+            <li>
+                <form method="post" action="~/Pages/Awards/EditAward.cshtml">
+                    <input type="hidden" name="idAward" value="@item.Id" />
+                    <button type="submit">Редактировать награду</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+}
+<form method="get" action="~/Pages/Awards/CreateAward.cshtml">
+    <button type="submit">Создать новую награду</button>
+</form>
+

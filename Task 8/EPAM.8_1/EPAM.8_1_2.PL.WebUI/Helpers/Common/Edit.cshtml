@@ -1,0 +1,58 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@using EPAM._8_1_2.PL.WebUI.Helpers;
+@{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
+    if (IsPost)
+    {
+        var whoSend = Request["whoSend"];
+        Enum.TryParse(whoSend, out UserOrAward resultWhoSend);
+        WebImage photo = null;
+        var newFileName = "";
+        var imagePath = "";
+        photo = WebImage.GetImageFromRequest();
+        if (resultWhoSend == UserOrAward.User)
+        {
+            var idUserRequest = Request["idUser"];
+            var name = Request["name"];
+            var dateOfBirthdayRequest = Request["dateOfBirthday"];
+
+            Guid.TryParse(idUserRequest, out Guid resultId);
+            DateTime.TryParse(dateOfBirthdayRequest, out DateTime dateOfBirthday);
+            IUsersBLL usersBLL = DependencyResolver.Instance.UsersBLL;
+            usersBLL.EditUser(resultId, name, dateOfBirthday);
+            if(photo !=null)
+            {
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                imagePath = $@"~\Images\UsersImages\" + newFileName;
+                photo.Resize(width: 60, height: 70, preserveAspectRatio: true, preventEnlarge: true);
+                photo.Save(imagePath);
+                usersBLL.SetPhoto(resultId,newFileName);
+            }
+            Response.Redirect("~/Pages/Users/Users.cshtml");
+        }
+        else if (resultWhoSend == UserOrAward.Award)
+        {
+            var idAwardRequest = Request["idAward"];
+            var title = Request["name"];
+
+            Guid.TryParse(idAwardRequest, out Guid resultId);
+            IAwardsBLL awardsBLL = DependencyResolver.Instance.AwardsBLL;
+            awardsBLL.EditAward(resultId, title);
+            if (photo != null)
+            {
+                newFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                imagePath = $@"~\Images\AwardsImages\" + newFileName;
+                photo.Resize(width: 50, height: 60, preserveAspectRatio: true, preventEnlarge: true);
+                photo.Save(imagePath);
+                awardsBLL.SetPhoto(resultId, newFileName);
+            }
+            Response.Redirect("~/Pages/Awards/Awards.cshtml");
+        }
+    }
+
+}

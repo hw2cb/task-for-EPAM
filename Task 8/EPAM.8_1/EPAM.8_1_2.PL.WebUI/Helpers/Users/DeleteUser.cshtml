@@ -1,0 +1,15 @@
+﻿@using BLL.Interfaces;
+@using Dependencies;
+@using Entities;
+@{
+    if (!User.IsInRole("admin"))
+    {
+        Response.Redirect(@"~/Pages/AccessDenied.cshtml");
+    }
+    var idUser = Request["idUser"];
+    IUsersBLL usersBLL = Dependencies.DependencyResolver.Instance.UsersBLL;
+    Guid.TryParse(idUser, out Guid result);
+    usersBLL.RemoveUser(result);
+    Response.Redirect("~/Pages/Users/Users.cshtml");
+}
+
